@@ -17,3 +17,12 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+.detailsContainer{
+  font-size: 1.5rem;
+  line-height: 2rem;
+  color: rgb(57, 63, 68);
+  p{
+    font-style: italic;
+  }
+}

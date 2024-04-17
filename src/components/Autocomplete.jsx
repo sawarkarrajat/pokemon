@@ -5,7 +5,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 export default function AutocompleteDropDown(props) {
   const { options, selected} = props;
   const optionLabels = options.map((item) => item.name);
-  const [value, setValue] = React.useState(optionLabels[0]);
+  const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
 
   if (props.options) {

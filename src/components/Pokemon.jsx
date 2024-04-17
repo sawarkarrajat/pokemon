@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { fetcher } from "../utils/commonUtils";
 import AutocompleteDropDown from "./Autocomplete";
 import Avatar from "@mui/material/Avatar";
@@ -6,12 +6,9 @@ const Pokemon = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [list, setList] = useState([]);
-  const [options, setOptions] = useState([]);
   const [selected, setSelected] = useState(null);
   const [selectedPokemonDetails, setSelectedPokemonDetails] = useState(null);
-  const [value, setValue] = React.useState(options[0]);
-  const [inputValue, setInputValue] = React.useState("");
-  const [abilities, setAbilities] = useState([])
+  const [abilities, setAbilities] = useState([]);
   const fetchData = async () => {
     try {
       setIsLoading(true);
@@ -34,11 +31,8 @@ const Pokemon = () => {
     const selectedOptionObject = list.filter((item) => item.name === selected);
     const url = selectedOptionObject[0]?.url;
     const pokemonDetails = await fetcher(url);
-    console.log('pokemonDetails: ', pokemonDetails)
     setSelectedPokemonDetails(pokemonDetails);
-    setAbilities( pokemonDetails.abilities)
-    console.log('pokemonDetails.abilities: ', pokemonDetails.abilities)
-
+    setAbilities(pokemonDetails.abilities);
   };
 
   useEffect(() => {
@@ -46,10 +40,15 @@ const Pokemon = () => {
       fetchPokemonDetails();
     }
   }, [selected]);
-
+  if (error) {
+    return <h3>oops something went wrong!!</h3>;
+  }
+  if (isLoading) {
+    return <h3>loading...</h3>;
+  }
   return (
     <>
-      <h1 style={{textAlign:'center'}}>Poke desk</h1>
+      <h1 style={{ textAlign: "center" }}>Poke desk</h1>
       <div>
         <AutocompleteDropDown
           options={list}
@@ -74,10 +73,9 @@ const Pokemon = () => {
             </ul>
             <p>Abilities:</p>
             <ul>
-
-            {abilities.map((item) => (
-              <li key={item.ability.name}>{item.ability.name}</li>
-            ))}
+              {abilities.map((item) => (
+                <li key={item.ability.name}>{item.ability.name}</li>
+              ))}
             </ul>
           </div>
         </div>
